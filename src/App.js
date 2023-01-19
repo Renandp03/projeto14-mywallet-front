@@ -10,14 +10,19 @@ import Exit from "./components/Exit";
 
 function App() {
 
+  const [infos, setInfos] = useState([])
+  
+
+
+
   return (
 
     <BrowserRouter>
       <GlobalStyled/>
         <Routes>
-          <Route path="/" element={<Login/>}/>
+          <Route path="/" element={<Login setInfos={setInfos}/>}/>
           <Route path="/cadastro" element={<Registration/>}/>
-          <Route path="/home" element={<Home/>}/>
+          <Route path="/home" element={<Home infos={infos}/>}/>
           <Route path="/nova-entrada" element={<Entry/>}/>
           <Route path="/nova-saida" element={<Exit/>}/>
 

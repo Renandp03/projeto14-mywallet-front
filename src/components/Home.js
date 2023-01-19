@@ -5,12 +5,29 @@ export default function Home(){
     return(
         <Screen>
         <Top>
-            <h1>Olá,Fulano</h1>
-            <img src="assets/exit.svg" alt="exit"/>
+            <h1>Olá, Fulano</h1>
+            <Link to="/"><img src="assets/exit.svg" alt="exit"/></Link>
         </Top>
-        <Box>
+        <BoxStyled>
 
-        </Box>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+
+            <Base><h1>SALDO</h1><p>2849,96</p></Base>
+        </BoxStyled>
 
         <Buttons>
 
@@ -73,12 +90,20 @@ const Top = styled.div`
     
 `
 
-const Box = styled.div`
+const BoxStyled = styled.div`
     width: 326px;
     height: 446px;
     background-color: white;
     border-radius: 5px;
     margin-bottom: 13px;
+    box-sizing: border-box;
+    padding-top: 20px;
+    position: relative;
+    overflow-y: scroll;
+    *{
+        font-family: 'Raleway';
+        font-size: 16px;
+    }
 `
 const Buttons = styled.div`
     width: 326px;
@@ -118,4 +143,60 @@ const Buttons = styled.div`
         }
     }
     
+`
+
+const Data = styled.div`
+    width: 326px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+
+`
+
+
+const Description = styled.div`
+    display: flex;
+    color: black;
+    margin: 10px 0px;
+    span{
+    color: #C6C6C6;
+    margin: 0px 10px;
+    }
+
+`
+
+const RedValue = styled.span`
+    color: red;
+    margin-right: 10px;
+`
+const ValueGreen = styled.span`
+    color: red;
+    margin-right: 10px;
+`
+
+const Base = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 326px;
+    background-color: white;
+    z-index: 1;
+    font-size: 17px;
+    position: sticky;
+    bottom: 0px;
+    left: 0px;
+    h1{
+        color: black;
+        margin: 10px;
+        font-weight: 700;
+    }
+    p{
+        color: green;
+        margin: 10px;
+        font-weight: 400;
+
+    }
+
 `

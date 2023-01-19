@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Registration(){
 
@@ -8,13 +9,25 @@ export default function Registration(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
+    const navigate = useNavigate()
+
+
+    function sign_up(){
+        if(password !== passwordConfirm){
+            return alert("Confirme a senha corretamente")
+        }
+
+        axios.post("http://localhost:5000/users", {name,email,password})
+        .then(() => navigate("/"))
+        .catch((error) => alert(error.message))
+    }
 
 
 
     return(
         <Screen>
             <Title>MyWallet</Title>
-            <Form>
+            <Form onSubmit={sign_up}>
 
                 <input
                 type="text"

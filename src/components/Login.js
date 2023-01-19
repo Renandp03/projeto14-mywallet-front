@@ -8,12 +8,25 @@ export default function Login(){
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+
+    function makeLogin(event){
+        event.preventDefault()
+
+        const request = axios.post("localhost",{email,password})
+        request.then(response => {
+            navigate("/home/:id")
+        })
+        request.catch(error => alert(error))
+    }
 
 
     return(
         <Screen>
+
             <Title>MyWallet</Title>
-            <Form>
+
+            <Form onSubmit={makeLogin}>
 
                 <input
                 type="email"
@@ -32,10 +45,11 @@ export default function Login(){
                 />
 
                 <button type="submit">Entrar</button>
-            </Form>
-            <Link to="/cadastro"><p> Primeira vez?Cadastre-se!</p></Link>
-            
 
+            </Form>
+            
+            <Link to="/cadastro"><p>Primeira vez?Cadastre-se!</p></Link>
+            
         </Screen>
     )
 }
