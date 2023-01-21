@@ -1,7 +1,29 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function Home(){
+export default function Home(props){
+
+    const { token } = props
+    const [informations, setInformations] = useState([])
+
+    const config = { 
+        headers:{
+        authorization: `Bearer ${token}`
+        }
+    }
+
+    useEffect(() => {
+        const promise = axios.get("http://localhost:5000/informations",config)
+        promise.then((res) => setInformations(res.data))
+        promise.catch((error) => alert(error))
+    }, [])
+
+
+
+
+
     return(
         <Screen>
         <Top>
@@ -12,7 +34,7 @@ export default function Home(){
 
             <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
             <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            <Data><Description><span>30/11</span>Mercado</Description><GreenValue>49,55</GreenValue></Data>
             <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
             <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
             <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
@@ -50,6 +72,17 @@ export default function Home(){
         </Screen>
     )
 }
+
+function Information(props){
+
+    const { date, description, type, value } = props
+
+    return(
+        <></>
+    )
+}
+
+
 
 const Screen = styled.div`
 
@@ -171,8 +204,8 @@ const RedValue = styled.span`
     color: red;
     margin-right: 10px;
 `
-const ValueGreen = styled.span`
-    color: red;
+const GreenValue = styled.span`
+    color: green;
     margin-right: 10px;
 `
 

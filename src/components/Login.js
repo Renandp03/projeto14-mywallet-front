@@ -1,21 +1,25 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 
-export default function Login(){
+export default function Login(props){
+
+    const {setToken} = props
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
     function makeLogin(event){
+
         event.preventDefault()
 
-        const request = axios.post("localhost",{email,password})
-        request.then(response => {
-            navigate("/home/:id")
+        const request = axios.post("http://localhost:5000/sign-in",{email,password})
+        request.then((res) => {
+            setToken(res.data)
+            navigate("/home")
         })
         request.catch(error => alert(error))
     }
@@ -72,8 +76,6 @@ const Screen = styled.div`
         text-decoration: none;
     }
 `
-
-
 const Title = styled.h1`
     font-family: 'Saira Stencil One';
     margin: 160px 0px 24px 0px;
@@ -82,7 +84,6 @@ const Title = styled.h1`
     line-height: 50px;
     color: white;
 `
-
 const Form = styled.form`
 
     display: flex;
