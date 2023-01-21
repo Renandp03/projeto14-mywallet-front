@@ -23,8 +23,8 @@ function App() {
           <Route path="/" element={<Login setToken={setToken}/>}/>
           <Route path="/cadastro" element={<Registration/>}/>
           <Route path="/home" element={<Home token={token}/>}/>
-          <Route path="/nova-entrada" element={<Entry/>}/>
-          <Route path="/nova-saida" element={<Exit/>}/>
+          <Route path="/nova-entrada" element={<Entry token={token}/>}/>
+          <Route path="/nova-saida" element={<Exit token={token}/>}/>
 
         </Routes>
 

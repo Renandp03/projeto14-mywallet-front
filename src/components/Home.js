@@ -5,19 +5,27 @@ import { useEffect, useState } from "react";
 
 export default function Home(props){
 
-    const { token } = props
     const [informations, setInformations] = useState([])
+    const [name, setName] = useState("")
 
-    const config = { 
-        headers:{
-        authorization: `Bearer ${token}`
-        }
-    }
-
+    
     useEffect(() => {
+
+        const { token } = props
+        const config = { 
+            headers:{
+            authorization: `Bearer ${token}`
+            }
+        }
+    
         const promise = axios.get("http://localhost:5000/informations",config)
-        promise.then((res) => setInformations(res.data))
+        promise.then((res) => {
+            setInformations(res.data.informations)
+            setName(res.data.user.name)
+        })
+
         promise.catch((error) => alert(error))
+
     }, [])
 
 
@@ -27,26 +35,12 @@ export default function Home(props){
     return(
         <Screen>
         <Top>
-            <h1>Olá, Fulano</h1>
+            <h1>Olá, {name}</h1>
             <Link to="/"><img src="assets/exit.svg" alt="exit"/></Link>
         </Top>
         <BoxStyled>
 
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><GreenValue>49,55</GreenValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
-            <Data><Description><span>30/11</span>Mercado</Description><RedValue>49,55</RedValue></Data>
+            {informations.map((i) => <Information date={i.date} description={i.description} type={i.type} value={i.value}/>)}
 
             <Base><h1>SALDO</h1><p>2849,96</p></Base>
         </BoxStyled>
@@ -78,7 +72,10 @@ function Information(props){
     const { date, description, type, value } = props
 
     return(
-        <></>
+        <Data>
+            <Description><span>{date}</span>{description}</Description>
+            <Value type={type}>{value}</Value>
+        </Data>
     )
 }
 
@@ -200,14 +197,12 @@ const Description = styled.div`
 
 `
 
-const RedValue = styled.span`
-    color: red;
+const Value = styled.span`
+    color: ${props => props.type==="green"?"green":"red"};
+    font-family: 'Raleway';
     margin-right: 10px;
 `
-const GreenValue = styled.span`
-    color: green;
-    margin-right: 10px;
-`
+
 
 const Base = styled.div`
     display: flex;
@@ -217,7 +212,7 @@ const Base = styled.div`
     background-color: white;
     z-index: 1;
     font-size: 17px;
-    position: sticky;
+    position: absolute ;
     bottom: 0px;
     left: 0px;
     h1{

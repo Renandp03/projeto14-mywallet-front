@@ -1,10 +1,45 @@
 import styled from "styled-components"
 import { useState } from "react"
+import axios from "axios"
+import dayjs from "dayjs"
+import { useNavigate } from "react-router-dom"
 
-export default function Entry(){
+export default function Entry(props){
 
     const [ value, setValue ] = useState("")
     const [ description, setDescription ] = useState("")
+    const navigate = useNavigate()
+
+    function sendEntry(event){
+        event.preventDefault()
+
+        const { token } = props
+
+
+        if(isNaN(value)||description.length===0){
+            return alert("Dados incompatíveis")
+        }
+
+        const config = { 
+            headers:{
+            authorization: `Bearer ${token}`
+            }
+        }
+        const newEntry = {
+            date:dayjs(Date.now()).format("DD/MM"),
+            description,
+            type:"green",
+            value
+        }
+
+        const promise = axios.post("http://localhost:5000/informations",newEntry,config)
+        promise.then(()=> {
+            alert("Depósito feito com sucesso")
+            navigate("/home")})
+        promise.catch(error => alert(error.message))
+
+
+    }
 
 
 
@@ -13,7 +48,7 @@ export default function Entry(){
             <Top><h1>Nova entrada</h1></Top>
 
 
-            <Form>
+            <Form onSubmit={sendEntry}>
 
                 <input
                     type="number"

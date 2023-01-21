@@ -1,10 +1,47 @@
 import styled from "styled-components"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import dayjs from "dayjs"
 
-export default function Exit(){
+
+
+export default function Exit(props){
 
     const [ value, setValue ] = useState("")
     const [ description, setDescription ] = useState("")
+    const navigate = useNavigate()
+
+    function sendExit(event){
+        event.preventDefault()
+
+        const { token } = props
+
+
+        if(isNaN(value)||description.length===0){
+            return alert("Dados incompatíveis")
+        }
+
+        const config = { 
+            headers:{
+            authorization: `Bearer ${token}`
+            }
+        }
+        const newExit = {
+            date:dayjs(Date.now()).format("DD/MM"),
+            description,
+            type:"red",
+            value
+        }
+
+        const promise = axios.post("http://localhost:5000/informations",newExit,config)
+        promise.then(()=> {
+            alert("Retirada feita com sucesso")
+            navigate("/home")})
+        promise.catch(error => alert(error.message))
+
+
+    }
 
 
 
@@ -13,7 +50,7 @@ export default function Exit(){
             <Top><h1>Nova saida</h1></Top>
 
 
-            <Form>
+            <Form onSubmit={sendExit}>
 
                 <input
                     type="number"
