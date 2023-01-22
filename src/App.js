@@ -11,9 +11,6 @@ import Exit from "./components/Exit";
 function App() {
 
   const [token, setToken] = useState()
-  
-
-
 
   return (
 
@@ -22,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login setToken={setToken}/>}/>
           <Route path="/cadastro" element={<Registration/>}/>
-          <Route path="/home" element={<Home token={token}/>}/>
+          <Route path="/home" element={<Home token={token} setToken={setToken}/>}/>
           <Route path="/nova-entrada" element={<Entry token={token}/>}/>
           <Route path="/nova-saida" element={<Exit token={token}/>}/>
 

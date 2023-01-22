@@ -17,9 +17,9 @@ export default function Registration(){
             return alert("Confirme a senha corretamente")
         }
 
-        axios.post("http://localhost:5000/users", {name,email,password})
-        .then(() => navigate("/"))
-        .catch((error) => alert(error.message))
+        const promise = axios.post("http://localhost:5000/users", {name,email,password})
+        promise.then(navigate("/"))
+        promise.catch((error) => alert(error.message))
     }
 
 

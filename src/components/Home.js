@@ -1,17 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Home(props){
 
+    const { token,setToken } = props
     const [informations, setInformations] = useState([])
-    const [name, setName] = useState("")
+    const [user, setUser] = useState("")
+    const navigate = useNavigate()
 
     
     useEffect(() => {
 
-        const { token } = props
+        
         const config = { 
             headers:{
             authorization: `Bearer ${token}`
@@ -21,7 +24,8 @@ export default function Home(props){
         const promise = axios.get("http://localhost:5000/informations",config)
         promise.then((res) => {
             setInformations(res.data.informations)
-            setName(res.data.user.name)
+            setUser(res.data.user)
+            console.log(res.data.user)
         })
 
         promise.catch((error) => alert(error))
@@ -29,21 +33,28 @@ export default function Home(props){
     }, [])
 
 
+    function exit(){
+        if(window.confirm("Tem certeza que deseja sair?")){
+            setToken("")
+            navigate("/")
+        }
+    }
 
 
 
     return(
         <Screen>
         <Top>
-            <h1>Olá, {name}</h1>
-            <Link to="/"><img src="assets/exit.svg" alt="exit"/></Link>
+            <h1>Olá, {user.name}</h1>
+            <img onClick={exit} src="assets/exit.svg" alt="exit"/>
         </Top>
         <BoxStyled>
-
-            {informations.map((i) => <Information date={i.date} description={i.description} type={i.type} value={i.value}/>)}
-
-            <Base><h1>SALDO</h1><p>2849,96</p></Base>
+            {
+                informations.length===0 ? <NoInformations>Não há registros de entrada ou saída</NoInformations> :
+                informations.map((i) => <Information date={i.date} description={i.description} type={i.type} value={i.value}/>)
+            }
         </BoxStyled>
+        <Base><h2>SALDO</h2><p>{user && Number(user.cash).toFixed(2)}</p></Base>
 
         <Buttons>
 
@@ -78,7 +89,6 @@ function Information(props){
         </Data>
     )
 }
-
 
 
 const Screen = styled.div`
@@ -122,17 +132,28 @@ const Top = styled.div`
 
 const BoxStyled = styled.div`
     width: 326px;
-    height: 446px;
+    height: 406px;
     background-color: white;
-    border-radius: 5px;
-    margin-bottom: 13px;
+    border-radius: 5px 5px 0px 0px;
     box-sizing: border-box;
     padding-top: 20px;
     position: relative;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
     *{
         font-family: 'Raleway';
         font-size: 16px;
+    }
+    h1{
+        justify-self: center;
+        align-self: center;
+        text-align: center;
+        margin-top: 200px;
+        width: 180px;
+    }
+    Data{
+        justify-content: flex-start;
     }
 `
 const Buttons = styled.div`
@@ -209,13 +230,15 @@ const Base = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 326px;
+    height: 40px;
     background-color: white;
+    border-radius: 0px 0px 5px 5px;
     z-index: 1;
+    font-family: 'Raleway';
     font-size: 17px;
-    position: absolute ;
-    bottom: 0px;
-    left: 0px;
-    h1{
+    margin-bottom: 13px;
+    
+    h2{
         color: black;
         margin: 10px;
         font-weight: 700;
@@ -227,4 +250,12 @@ const Base = styled.div`
 
     }
 
+`
+
+const NoInformations = styled.h1`
+    color: #868686;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
 `
