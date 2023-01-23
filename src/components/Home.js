@@ -96,7 +96,6 @@ const Screen = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 375px;
     p{
         color: white;
         font-weight: 700;
