@@ -32,7 +32,7 @@ export default function Entry(props){
             value
         }
 
-        const promise = axios.post("http://localhost:5000/informations",newEntry,config)
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}/informations`,newEntry,config)
         promise.then(()=> {
             alert("Depósito feito com sucesso")
             navigate("/home")})

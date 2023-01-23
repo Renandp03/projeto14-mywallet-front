@@ -34,7 +34,7 @@ export default function Exit(props){
             value
         }
 
-        const promise = axios.post("http://localhost:5000/informations",newExit,config)
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}/informations`,newExit,config)
         promise.then(()=> {
             alert("Retirada feita com sucesso")
             navigate("/home")})

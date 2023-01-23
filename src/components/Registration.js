@@ -17,7 +17,7 @@ export default function Registration(){
             return alert("Confirme a senha corretamente")
         }
 
-        const promise = axios.post("http://localhost:5000/users", {name,email,password})
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}/users`, {name,email,password})
         promise.then(navigate("/"))
         promise.catch((error) => alert(error.message))
     }

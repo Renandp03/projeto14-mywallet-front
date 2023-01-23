@@ -16,7 +16,7 @@ export default function Login(props){
 
         event.preventDefault()
 
-        const request = axios.post("http://localhost:5000/sign-in",{email,password})
+        const request = axios.post(`${process.env.REACT_APP_API_URL}/sign-in`,{email,password})
         request.then((res) => {
             setToken(res.data)
             navigate("/home")

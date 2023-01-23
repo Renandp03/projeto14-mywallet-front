@@ -20,7 +20,7 @@ export default function Home(props){
             }
         }
     
-        const promise = axios.get("http://localhost:5000/informations",config)
+        const promise = axios.get(`${process.env.REACT_APP_API_URL}/informations`,config)
         promise.then((res) => {
             setInformations(res.data.informations)
             setUser(res.data.user)
