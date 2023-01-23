@@ -14,7 +14,6 @@ export default function Home(props){
     
     useEffect(() => {
 
-        
         const config = { 
             headers:{
             authorization: `Bearer ${token}`
@@ -85,7 +84,7 @@ function Information(props){
     return(
         <Data>
             <Description><span>{date}</span>{description}</Description>
-            <Value type={type}>{value}</Value>
+            <Value type={type}>{value.replace(".",",")}</Value>
         </Data>
     )
 }
@@ -127,6 +126,14 @@ const Top = styled.div`
         line-height: 31px;
         color: white;
     }
+
+    img{
+        width: 23px;
+        transition: all linear .1s;
+        &:hover{
+            width: 27px;
+        }
+    }
     
 `
 
@@ -165,12 +172,15 @@ const Buttons = styled.div`
     button{
         position: relative;
         width: 155px;
+        min-width: 40px;
         height: 114px;
         background-color: #A328D6;
         border-radius: 5px;
         border: none;
         transition: all linear .2s;
+        cursor: pointer;
         &:hover{
+            width: 165px;
             background-color: #741999;
         }
 

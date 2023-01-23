@@ -83,6 +83,12 @@ const Title = styled.h1`
     font-size: 32px;
     line-height: 50px;
     color: white;
+    transition: all linear .2s;
+    &:hover{
+        margin: 150px 0px 34px 0px;
+
+        stroke: 10px solid #A328D6;
+    }
 `
 const Form = styled.form`
 
@@ -119,6 +125,7 @@ const Form = styled.form`
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 36px;
+        cursor: pointer;
         transition: all linear .2s;
         &:hover{
             background-color:#741999

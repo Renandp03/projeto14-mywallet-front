@@ -132,6 +132,7 @@ const Form = styled.form`
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 36px;
+        cursor: pointer;
         transition: all linear .2s;
         &:hover{
             background-color:#741999
